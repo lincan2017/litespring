@@ -1,4 +1,4 @@
-package org.litespring.bean.factory;
+package org.litespring.bean;
 
 /**
  * @author : Lin Can

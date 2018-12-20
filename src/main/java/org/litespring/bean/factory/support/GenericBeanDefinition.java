@@ -1,6 +1,6 @@
 package org.litespring.bean.factory.support;
 
-import org.litespring.bean.factory.BeanDefinition;
+import org.litespring.bean.BeanDefinition;
 
 /**
  * @author : Lin Can

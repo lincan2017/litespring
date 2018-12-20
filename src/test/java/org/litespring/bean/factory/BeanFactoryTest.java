@@ -2,8 +2,10 @@ package org.litespring.bean.factory;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.litespring.bean.BeanDefinition;
 import org.litespring.bean.PetStore;
 import org.litespring.bean.factory.support.DefaultBeanFactory;
+import org.litespring.bean.factory.xml.XmlBeanDefinitionReader;
 
 /**
  * @author : Lin Can
@@ -14,9 +16,13 @@ public class BeanFactoryTest {
     @Test
     public void testGetDefinition() {
 
-        BeanFactory beanFactory = new DefaultBeanFactory("petStore.xml");
+        DefaultBeanFactory beanFactory = new DefaultBeanFactory();
 
-        BeanDefinition beanDefinition = beanFactory.getDefinition("petStore");
+        XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
+
+        xmlBeanDefinitionReader.loadBeanDefinition("petstore.xml");
+
+        BeanDefinition beanDefinition = beanFactory.getBeanDefinition("petStore");
 
         Assert.assertEquals("org.litespring.bean.PetStore", beanDefinition.getBeanClassName());
 
