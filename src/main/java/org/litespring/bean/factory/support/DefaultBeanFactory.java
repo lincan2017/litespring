@@ -8,14 +8,22 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * 缺省的BeanFactory
  * @author : Lin Can
  * @date : 2018/12/10 20:59
  */
 public class DefaultBeanFactory implements BeanDefinitionRegistry,BeanFactory {
 
-
+    /**
+     * 存放id和对应的bean定义
+     */
     private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<String, BeanDefinition>();
 
+    /**
+     * 根据beanId获取定义
+     * @param beanId beanId
+     * @return
+     */
     public BeanDefinition getBeanDefinition(String beanId) {
         return beanDefinitionMap.get(beanId);
     }
