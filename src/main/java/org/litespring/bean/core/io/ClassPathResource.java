@@ -14,13 +14,19 @@ public class ClassPathResource implements Resource {
     private ClassLoader classLoader;
 
     public ClassPathResource(String xmlPath) {
+        this(xmlPath,null);
+    }
+
+    public ClassPathResource(String xmlPath, ClassLoader classLoader) {
         this.xmlPath = xmlPath;
-        this.classLoader = ClassUtils.getDefaultClassLoader();
+        this.classLoader = ((classLoader==null) ? ClassUtils.getDefaultClassLoader() : classLoader);
     }
 
     public InputStream getInputStream() {
         return this.classLoader.getResourceAsStream(xmlPath);
     }
 
-
+    public String getDiscription() {
+        return xmlPath;
+    }
 }

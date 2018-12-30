@@ -8,6 +8,7 @@ import org.litespring.bean.BeanDefinition;
 import org.litespring.bean.factory.BeanDefinitionStoreException;
 import org.litespring.bean.factory.support.BeanDefinitionRegistry;
 import org.litespring.bean.factory.support.GenericBeanDefinition;
+import org.litespring.core.io.Resource;
 import org.litespring.utils.ClassUtils;
 
 import java.io.IOException;
@@ -30,12 +31,11 @@ public class XmlBeanDefinitionReader {
         this.beanDefinitionRegistry = beanDefinitionRegistry;
     }
 
-    public void loadBeanDefinition(String configPath) {
+    public void loadBeanDefinition(Resource resource) {
         InputStream inputStream = null;
 
         try {
-            ClassLoader classLoader = ClassUtils.getDefaultClassLoader();
-            inputStream = classLoader.getResourceAsStream(configPath);
+            inputStream = resource.getInputStream();
             SAXReader saxReader = new SAXReader();
             Document document = saxReader.read(inputStream);
             Element rootEL = document.getRootElement();
@@ -50,7 +50,7 @@ public class XmlBeanDefinitionReader {
                 BeanDefinition beanDefinition = new GenericBeanDefinition(id, clazzFullName);
                 this.beanDefinitionRegistry.registerBeanDefinition(id, beanDefinition);
             }
-        } catch (DocumentException e) {
+        } catch (Exception e) {
             throw new BeanDefinitionStoreException("解析bean定义出错", e);
         } finally {
             if (inputStream != null) {

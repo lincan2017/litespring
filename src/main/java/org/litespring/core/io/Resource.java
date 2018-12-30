@@ -15,4 +15,6 @@ public interface Resource {
      * @return 返回配置文件对应的输入流
      */
     InputStream getInputStream() throws IOException;
+
+    String getDiscription();
 }

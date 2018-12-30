@@ -35,4 +35,8 @@ public class FileSystemResource implements Resource {
     public InputStream getInputStream() throws FileNotFoundException {
         return new FileInputStream(file);
     }
+
+    public String getDiscription() {
+        return xmlPath;
+    }
 }

@@ -5,8 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.litespring.bean.BeanDefinition;
 import org.litespring.bean.PetStore;
+import org.litespring.bean.core.io.ClassPathResource;
 import org.litespring.bean.factory.support.DefaultBeanFactory;
 import org.litespring.bean.factory.xml.XmlBeanDefinitionReader;
+import org.litespring.core.io.Resource;
 
 /**
  * 测试BeanFactory
@@ -38,9 +40,9 @@ public class BeanFactoryTest {
     @Test
     public void testGetDefinition() {
 
-
+        Resource resource = new ClassPathResource("petstore.xml");
         //加载配置文件
-        reader.loadBeanDefinition("petstore.xml");
+        reader.loadBeanDefinition(resource);
 
         //根据id获取bean定义
         BeanDefinition beanDefinition = factory.getBeanDefinition("petStore");
@@ -55,8 +57,10 @@ public class BeanFactoryTest {
 
     @Test
     public void testInvalidBean() {
+
+        Resource resource = new ClassPathResource("petstore.xml");
         //加载配置文件
-        reader.loadBeanDefinition("petstore.xml");
+        reader.loadBeanDefinition(resource);
 
         //获取特定id对应的bean实例
         try {
@@ -69,9 +73,11 @@ public class BeanFactoryTest {
 
     @Test
     public void testInvalidXML() {
-        //加载配置文件
+
         try {
-            reader.loadBeanDefinition("XXX.xml");
+            //加载配置文件
+            Resource resource = new ClassPathResource("XXX.xml");
+            reader.loadBeanDefinition(resource);
         } catch (BeanDefinitionStoreException e) {
             return;
         }
