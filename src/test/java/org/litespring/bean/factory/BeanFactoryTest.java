@@ -1,6 +1,7 @@
 package org.litespring.bean.factory;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.litespring.bean.BeanDefinition;
 import org.litespring.bean.PetStore;
@@ -15,6 +16,19 @@ import org.litespring.bean.factory.xml.XmlBeanDefinitionReader;
  */
 public class BeanFactoryTest {
 
+    private DefaultBeanFactory factory;
+    private XmlBeanDefinitionReader reader;
+
+    @Before
+    public void setUp () {
+        //缺省的BeanFactory用于获取bean
+        factory = new DefaultBeanFactory();
+
+        //用于解析xml的Reader
+        reader = new XmlBeanDefinitionReader(factory);
+
+    }
+
     /**
      * 获取Bean定义
      *
@@ -24,40 +38,29 @@ public class BeanFactoryTest {
     @Test
     public void testGetDefinition() {
 
-        //缺省的BeanFactory用于获取bean
-        DefaultBeanFactory beanFactory = new DefaultBeanFactory();
-
-        //用于解析xml的Reader
-        XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
 
         //加载配置文件
-        xmlBeanDefinitionReader.loadBeanDefinition("petstore.xml");
+        reader.loadBeanDefinition("petstore.xml");
 
         //根据id获取bean定义
-        BeanDefinition beanDefinition = beanFactory.getBeanDefinition("petStore");
+        BeanDefinition beanDefinition = factory.getBeanDefinition("petStore");
 
         Assert.assertEquals("org.litespring.bean.PetStore", beanDefinition.getBeanClassName());
 
         //获取特定id对应的bean实例
-        PetStore petStore = (PetStore) beanFactory.getBean("petStore");
+        PetStore petStore = (PetStore) factory.getBean("petStore");
 
         Assert.assertNotNull(petStore);
     }
 
     @Test
     public void testInvalidBean() {
-
-        //缺省的BeanFactory用于获取bean
-        DefaultBeanFactory beanFactory = new DefaultBeanFactory();
-        //用于解析xml的Reader
-        XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
-
         //加载配置文件
-        xmlBeanDefinitionReader.loadBeanDefinition("petstore.xml");
+        reader.loadBeanDefinition("petstore.xml");
 
         //获取特定id对应的bean实例
         try {
-            beanFactory.getBean("invalidBean");
+            factory.getBean("invalidBean");
         } catch (BeanCreateException e) {
             return;
         }
@@ -66,14 +69,9 @@ public class BeanFactoryTest {
 
     @Test
     public void testInvalidXML() {
-        //缺省的BeanFactory用于获取bean
-        DefaultBeanFactory beanFactory = new DefaultBeanFactory();
-        //用于解析xml的Reader
-        XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
-
         //加载配置文件
         try {
-            xmlBeanDefinitionReader.loadBeanDefinition("XXX.xml");
+            reader.loadBeanDefinition("XXX.xml");
         } catch (BeanDefinitionStoreException e) {
             return;
         }
