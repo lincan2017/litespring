@@ -8,4 +8,7 @@
           class="org.litespring.bean.PetStore" >
     </bean>
 
+    <bean id="invalidBean"
+          class="xxx.xxxxx" >
+    </bean>
 </beans>

@@ -1,6 +1,7 @@
 package org.litespring.bean.factory.support;
 
 import org.litespring.bean.BeanDefinition;
+import org.litespring.bean.factory.BeanCreateException;
 import org.litespring.bean.factory.BeanFactory;
 import org.litespring.utils.ClassUtils;
 
@@ -22,7 +23,7 @@ public class DefaultBeanFactory implements BeanDefinitionRegistry,BeanFactory {
     /**
      * 根据beanId获取定义
      * @param beanId beanId
-     * @return
+     * @return id 对应的bean 定义
      */
     public BeanDefinition getBeanDefinition(String beanId) {
         return beanDefinitionMap.get(beanId);
@@ -32,18 +33,14 @@ public class DefaultBeanFactory implements BeanDefinitionRegistry,BeanFactory {
         ClassLoader classLoader = ClassUtils.getDefaultClassLoader();
         BeanDefinition definition = getBeanDefinition(beanId);
         if (definition == null) {
-            throw new RuntimeException("没有对应的bean定义");
+            throw new BeanCreateException("创建bean失败：beanDefinition is null");
         }
         String beanClassName = definition.getBeanClassName();
         try {
             Class beanClass = classLoader.loadClass(beanClassName);
             return beanClass.newInstance();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new BeanCreateException("创建bean失败：",beanClassName,e);
         }
     }
 
