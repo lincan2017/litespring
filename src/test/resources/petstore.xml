@@ -8,6 +8,10 @@
           class="org.litespring.bean.PetStore" >
     </bean>
 
+    <bean id="sweetStore" scope="prototype"
+          class="org.litespring.bean.SweetStore" >
+    </bean>
+
     <bean id="invalidBean"
           class="xxx.xxxxx" >
     </bean>

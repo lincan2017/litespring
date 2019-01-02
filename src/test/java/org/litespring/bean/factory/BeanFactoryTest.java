@@ -5,8 +5,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.litespring.bean.BeanDefinition;
 import org.litespring.bean.PetStore;
+import org.litespring.bean.SweetStore;
 import org.litespring.bean.core.io.ClassPathResource;
 import org.litespring.bean.factory.support.DefaultBeanFactory;
+import org.litespring.bean.factory.support.GenericBeanDefinition;
 import org.litespring.bean.factory.xml.XmlBeanDefinitionReader;
 import org.litespring.core.io.Resource;
 
@@ -46,13 +48,29 @@ public class BeanFactoryTest {
 
         //根据id获取bean定义
         BeanDefinition beanDefinition = factory.getBeanDefinition("petStore");
+        //单例的
+        Assert.assertTrue(beanDefinition.isSingleton());
+        //原型的
+        Assert.assertFalse(beanDefinition.isPrototype());
+
+        Assert.assertEquals(beanDefinition.getScope(),BeanDefinition.SCOPE_DEFAULT);
 
         Assert.assertEquals("org.litespring.bean.PetStore", beanDefinition.getBeanClassName());
 
-        //获取特定id对应的bean实例
+        //获取特定id对应的bean实例 -- 单例
         PetStore petStore = (PetStore) factory.getBean("petStore");
 
         Assert.assertNotNull(petStore);
+
+        PetStore petStore1 = (PetStore) factory.getBean("petStore");
+
+        Assert.assertEquals(petStore,petStore1);
+
+        //原型
+        SweetStore sweetStore = (SweetStore) factory.getBean("sweetStore");
+        SweetStore sweetStore1 = (SweetStore) factory.getBean("sweetStore");
+
+        Assert.assertNotEquals(sweetStore,sweetStore1);
     }
 
     @Test
