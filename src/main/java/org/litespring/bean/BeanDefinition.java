@@ -1,5 +1,7 @@
 package org.litespring.bean;
 
+import java.util.List;
+
 /**
  * bean定义类
  * @author : Lin Can
@@ -50,4 +52,10 @@ public interface BeanDefinition {
      * @return Boolean
      */
     boolean isPrototype();
+
+    /**
+     * 获取property标签对应的数据集合
+     * @return 返回property集合
+     */
+    List<PropertyValue> getPropertyValueList();
 }

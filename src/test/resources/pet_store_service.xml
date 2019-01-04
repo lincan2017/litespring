@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="petStoreService"
+          class="org.litespring.service.PetStoreService" >
+        <property name="accountDao" ref="accountDao"></property>
+        <property name="itemDao" ref="itemDao"></property>
+        <property name="env" value="test"></property>
+    </bean>
+
+    <bean id="itemDao"
+          class="org.litespring.dao.ItemDao" >
+    </bean>
+
+    <bean id="accountDao"
+          class="org.litespring.dao.AccountDao" >
+    </bean>
+</beans>

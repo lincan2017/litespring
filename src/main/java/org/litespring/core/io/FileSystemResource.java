@@ -1,4 +1,4 @@
-package org.litespring.bean.core.io;
+package org.litespring.core.io;
 
 import org.litespring.core.io.Resource;
 import org.litespring.utils.Assert;

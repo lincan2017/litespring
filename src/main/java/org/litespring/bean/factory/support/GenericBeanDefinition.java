@@ -1,6 +1,10 @@
 package org.litespring.bean.factory.support;
 
 import org.litespring.bean.BeanDefinition;
+import org.litespring.bean.PropertyValue;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 通用的BeanDefinition的实现
@@ -23,6 +27,8 @@ public class GenericBeanDefinition implements BeanDefinition {
      * classpath
      */
     private String classFullName;
+
+    private List<PropertyValue> propertyValueList = new ArrayList<PropertyValue>();
 
     public GenericBeanDefinition(String id, String clazzFullName) {
         this.id = id;
@@ -49,5 +55,9 @@ public class GenericBeanDefinition implements BeanDefinition {
         this.scope = scope;
         isSingleton = SCOPE_SINGLETON.equalsIgnoreCase(scope) || SCOPE_DEFAULT.equals(scope);
         isPrototype = SCOPE_PROTOTYPE.equalsIgnoreCase(scope);
+    }
+
+    public List<PropertyValue> getPropertyValueList() {
+        return this.propertyValueList;
     }
 }

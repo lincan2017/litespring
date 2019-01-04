@@ -6,9 +6,8 @@ import org.junit.Test;
 import org.litespring.bean.BeanDefinition;
 import org.litespring.bean.PetStore;
 import org.litespring.bean.SweetStore;
-import org.litespring.bean.core.io.ClassPathResource;
+import org.litespring.core.io.ClassPathResource;
 import org.litespring.bean.factory.support.DefaultBeanFactory;
-import org.litespring.bean.factory.support.GenericBeanDefinition;
 import org.litespring.bean.factory.xml.XmlBeanDefinitionReader;
 import org.litespring.core.io.Resource;
 
