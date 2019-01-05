@@ -15,6 +15,16 @@ public class PetStoreService {
 
     private String env;
 
+    private Integer petNum;
+
+    public Integer getPetNum() {
+        return petNum;
+    }
+
+    public void setPetNum(Integer petNum) {
+        this.petNum = petNum;
+    }
+
     public ItemDao getItemDao() {
         return itemDao;
     }

@@ -9,6 +9,7 @@
         <property name="accountDao" ref="accountDao"></property>
         <property name="itemDao" ref="itemDao"></property>
         <property name="env" value="test"></property>
+        <property name="petNum" value="3"></property>
     </bean>
 
     <bean id="itemDao"

@@ -20,5 +20,7 @@ public class ApplicationContextTest {
         Assert.assertNotNull(petStoreService.getItemDao());
 
         Assert.assertEquals(petStoreService.getEnv(),"test");
+
+        Assert.assertEquals(petStoreService.getPetNum().intValue(),3);
     }
 }
