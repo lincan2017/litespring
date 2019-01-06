@@ -28,7 +28,7 @@ public class BeanDefinitionTest {
         List<PropertyValue> propertyValueList = beanDefinition.getPropertyValueList();
 
         //根据配置文件可判断是3
-        Assert.assertEquals(propertyValueList.size(),3);
+        Assert.assertEquals(propertyValueList.size(),4);
 
         {
             PropertyValue pv = this.getProperValue ("itemDao",propertyValueList);
