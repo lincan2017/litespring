@@ -6,7 +6,6 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.litespring.bean.BeanDefinition;
-import org.litespring.bean.ConstructorArgument;
 import org.litespring.bean.PropertyValue;
 import org.litespring.bean.factory.BeanDefinitionStoreException;
 import org.litespring.bean.factory.config.RuntimeBeanReference;
@@ -40,8 +39,6 @@ public class XmlBeanDefinitionReader {
 
     private final static String PROPERTY_ELEMENT = "property";
 
-    private final static String CONSTRUCTOR_ARG_ELEMENT = "constructor-arg";
-
     private final Log logger = LogFactory.getLog(getClass());
 
     private BeanDefinitionRegistry beanDefinitionRegistry;
@@ -70,8 +67,7 @@ public class XmlBeanDefinitionReader {
                 if (element.attribute(SCOPE_ATTRIBUTE) != null) {
                     beanDefinition.setScope(element.attributeValue(SCOPE_ATTRIBUTE));
                 }
-                parsePropertyElement(element, beanDefinition);
-                parseConstructorArgElement(element, beanDefinition);
+                parsePropertyElement(element,beanDefinition);
                 this.beanDefinitionRegistry.registerBeanDefinition(id, beanDefinition);
             }
         } catch (Exception e) {
@@ -87,20 +83,7 @@ public class XmlBeanDefinitionReader {
         }
     }
 
-    private void parseConstructorArgElement(Element element, BeanDefinition bd) {
-        Iterator<Element> elementIterator = element.elementIterator(CONSTRUCTOR_ARG_ELEMENT);
-
-        while (elementIterator.hasNext()) {
-            Element constructorArgEL = elementIterator.next();
-            Object value = parsePropertyValue(constructorArgEL,bd,null);
-
-            bd.getConstructorArgument().getValueHolderList().
-                    add(new ConstructorArgument.ValueHolder(value));
-
-        }
-    }
-
-    private void parsePropertyElement(Element element, BeanDefinition bd) {
+    private void parsePropertyElement (Element element, BeanDefinition bd) {
         Iterator<Element> elementIterator = element.elementIterator(PROPERTY_ELEMENT);
 
         while (elementIterator.hasNext()) {
@@ -111,9 +94,9 @@ public class XmlBeanDefinitionReader {
                 logger.fatal("Tag 'property' must have a 'name' attribute");
                 return;
             }
-            Object value = parsePropertyValue(propertyEL, bd, propertyName);
+            Object value = parsePropertyValue(propertyEL,bd,propertyName);
 
-            PropertyValue propertyValue = new PropertyValue(propertyName, value);
+            PropertyValue propertyValue = new PropertyValue(propertyName,value);
 
             bd.getPropertyValueList().add(propertyValue);
         }
@@ -124,8 +107,8 @@ public class XmlBeanDefinitionReader {
                 "<property> element for property '" + propertyName + "'" :
                 "<constructor-arg> element";
 
-        boolean hasRefAttr = (element.attribute(REF_ATTRIBUTE) != null);
-        boolean hasValueAttr = (element.attribute(VALUE_ATTRIBUTE) != null);
+        boolean hasRefAttr = (element.attribute(REF_ATTRIBUTE)!=null);
+        boolean hasValueAttr = (element.attribute(VALUE_ATTRIBUTE)!=null);
 
         if (hasRefAttr) {
             return new RuntimeBeanReference(element.attributeValue(REF_ATTRIBUTE));
